@@ -16,12 +16,19 @@ protected:
 public:
 	TList();
 	~TList();
+	
+	int GetSize() { return len; }
+	int GetPos() { return pos; }
+	void SetPos(int _pos);
+
 	void InsFirst(T el);
 	void InsCurr(T el);
 	void InsLast(T el);
 	void InsOrder(T el);
 	void DelFirst();
 	void DelCurr();
+	void DelLast();
+	
 	T GetCurr();
 	void Reset();
 	void GoNext();
@@ -43,7 +50,7 @@ TList<T>::~TList()
 {
 	TNode<T> *p;
 	p = pFirst;
-	while (pFirst == NULL)
+	while (pFirst == pStop)
 	{
 		p = pFirst->pNext;
 		delete pFirst;
@@ -51,13 +58,28 @@ TList<T>::~TList()
 	}
 }
 template<class T>
+void TList<T>::SetPos(int _pos)
+{
+	for (int i = 0; i < _pos; i++)
+		GoNext();
+}
+template<class T>
 void TList<T>::InsFirst(T el)
 {
 	TNode<T> *pNewFirst = new TNode<T>;
 	pNewFirst->val = el;
-	pNewFirst->pNext = pFirst;
-	pFirst = pNewFirst;
-	len++;
+	if (pFirst == NULL)
+	{
+		pFirst =pLast=pCurr= pNewFirst;
+		pFirst->pNext = pStop;
+		pos = 0;
+	}
+	else
+	{
+		pNewFirst->pNext = pFirst;
+		pFirst = pNewFirst;
+	}
+	len++;	
 }
 template<class T>
 void TList<T>::InsLast(T el)
@@ -69,14 +91,40 @@ void TList<T>::InsLast(T el)
 	len++;
 }
 template<class T>
+void TList<T>::DelLast()
+{
+	if (len == 1)
+	{
+		pos = -1;
+		delete pFirst;
+		pCurr = pPrev = pLast = pFirst = pStop = NULL;
+	}
+	else
+	{
+		tNode<T> p = pFirst;
+		pFirst = pFirst->pNext;
+		delete p;
+
+	}
+	len--;
+}
+template<class T>
 void TList<T>::DelFirst()
 {
-	~TList();
-	/*len--;
-	pos = -1;
-	pCurr = NULL;
-	pPrev = NULL;
-	delete pFirst;*/
+	if (len == 1)
+	{
+		pos = -1;
+		delete pFirst;
+		pCurr =pPrev=pLast=pFirst=pStop = NULL;
+	}
+	else
+	{
+		tNode<T> p = pFirst;
+		pFirst = pFirst->pNext;
+		delete p;
+		
+	}
+	len--;
 }
 template<class T>
 void TList<T>::InsCurr(T el)
