@@ -33,6 +33,13 @@ public:
 	void Reset();
 	void GoNext();
 	bool IsEnd();
+	
+	friend ostream& operator<<(ostream &out, TList<T> &l)
+	{
+		for (l.Reset(); !l.IsEnd();l.GoNext() )
+			out << l.pCurr->val << ' ';
+		return out;
+	}
 };
 template<class T>
 TList<T>::TList()
@@ -60,6 +67,7 @@ TList<T>::~TList()
 template<class T>
 void TList<T>::SetPos(int _pos)
 {
+	
 	for (int i = 0; i < _pos; i++)
 		GoNext();
 }
@@ -68,7 +76,7 @@ void TList<T>::InsFirst(T el)
 {
 	TNode<T> *pNewFirst = new TNode<T>;
 	pNewFirst->val = el;
-	if (pFirst == NULL)
+	if (pFirst == pStop)
 	{
 		pFirst =pLast=pCurr= pNewFirst;
 		pFirst->pNext = pStop;
@@ -93,20 +101,17 @@ void TList<T>::InsLast(T el)
 template<class T>
 void TList<T>::DelLast()
 {
-	if (len == 1)
-	{
-		pos = -1;
-		delete pFirst;
-		pCurr = pPrev = pLast = pFirst = pStop = NULL;
-	}
+	if (pLast == pFirst) DelFirst();
 	else
 	{
-		tNode<T> p = pFirst;
-		pFirst = pFirst->pNext;
-		delete p;
-
+		for(Reset();pCurr->pNext!=pStop;GoNext()) {}
+		delete pLast;
+		pLast=pCurr= pPrev;
+		Reset();
+		len--;
+	
 	}
-	len--;
+	
 }
 template<class T>
 void TList<T>::DelFirst()
@@ -119,7 +124,7 @@ void TList<T>::DelFirst()
 	}
 	else
 	{
-		tNode<T> p = pFirst;
+		TNode<T> *p = pFirst;
 		pFirst = pFirst->pNext;
 		delete p;
 		
@@ -144,7 +149,7 @@ void TList<T>::DelCurr()
 	else
 	{
 		if (pLast == pCurr) pLast = pPrev;
-		pPrew->pNext = pCurr->pNext;
+		pPrev->pNext = pCurr->pNext;
 		delete pCurr;
 		pCurr = pPrev->pNext;
 		len--;
