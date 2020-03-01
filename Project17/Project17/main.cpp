@@ -18,5 +18,10 @@ int main()
 	cout << p << endl;
 	p.DelLast();
 	cout << p << endl;
+	p.SetPos(1);
+	p.DelCurr();
+	cout << p << endl;
+	p.InsLast(6);
+	cout << p << endl;
 	_getch();
 }

@@ -67,7 +67,7 @@ TList<T>::~TList()
 template<class T>
 void TList<T>::SetPos(int _pos)
 {
-	
+	Reset();
 	for (int i = 0; i < _pos; i++)
 		GoNext();
 }
@@ -96,6 +96,7 @@ void TList<T>::InsLast(T el)
 	pNew->val = el;
 	pLast->pNext = pNew;
 	pLast = pNew;
+	pLast->pNext = pStop;
 	len++;
 }
 template<class T>
@@ -106,10 +107,11 @@ void TList<T>::DelLast()
 	{
 		for(Reset();pCurr->pNext!=pStop;GoNext()) {}
 		delete pLast;
-		pLast=pCurr= pPrev;
-		Reset();
+		pLast= pPrev;
+		pCurr =pPrev;
+		pCurr->pNext = pStop;
 		len--;
-	
+		Reset();
 	}
 	
 }
