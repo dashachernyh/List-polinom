@@ -1,10 +1,12 @@
 #include<iostream>
 using namespace std;
 #include"List.h"
+#include"List_head.h"
+#include"Polinom.h"
 #include<conio.h>
 int main()
 {
-	TList<int> p;
+	/*TList<int> p;
 	for (int i = 0; i < 5; i++)
 	{
 		p.InsFirst(i);
@@ -22,6 +24,9 @@ int main()
 	p.DelCurr();
 	cout << p << endl;
 	p.InsLast(6);
-	cout << p << endl;
+	cout << p << endl;*/
+	//TPolinom p;
+	//cin >> p;
+	//cout << p;
 	_getch();
 }

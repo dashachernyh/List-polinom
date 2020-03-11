@@ -16,6 +16,7 @@ protected:
 public:
 	TList();
 	~TList();
+	void DelList();
 	
 	int GetSize() { return len; }
 	int GetPos() { return pos; }
@@ -53,7 +54,7 @@ TList<T>::TList()
 	pStop = NULL;
 }
 template<class T>
-TList<T>::~TList()
+void TList<T>::DelList()
 {
 	TNode<T> *p;
 	p = pFirst;
@@ -63,6 +64,11 @@ TList<T>::~TList()
 		delete pFirst;
 		pFirst = p;
 	}
+}
+template<class T>
+TList<T>::~TList()
+{
+	DelList();
 }
 template<class T>
 void TList<T>::SetPos(int _pos)
