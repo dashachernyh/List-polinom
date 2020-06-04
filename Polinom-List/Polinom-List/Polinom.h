@@ -2,21 +2,24 @@
 #include"List_Head.h"
 #include<iostream>
 using namespace std;
-class TPolinom :public THeadList<Monom>
+class TPolinom :public THeadList<Monom> //потомок класса
 {
 public:
-	TPolinom();
-	TPolinom(int **mas, int size);
-	TPolinom(TPolinom &p);
-	Monom& GetMonom();
-	void operator =(TPolinom &p);
-	void InsMonom(Monom mon);
-	TPolinom operator *(double k);
-	void operator *=(double k);
-	TPolinom operator *(Monom mon);
-	void operator *=(Monom mon);
-	TPolinom operator +(TPolinom &q);
-	void operator +=(TPolinom &q);
+	TPolinom(); //конструктор по умолчанию
+	TPolinom(int **mas, int size); //коструктор инициализации
+	TPolinom(TPolinom &p);  //конструктор копирования
+	//доступ
+	Monom& GetMonom();  //текущий моном
+	void InsMonom(Monom mon); //записать значение текущего монома
+	//основные операции
+	void operator =(TPolinom &p); //присваивание
+	TPolinom operator *(double k); //умножение полиномма на const (создается новый полинома)
+	void operator *=(double k);    //умножение на const исходного полинома
+	TPolinom operator *(Monom mon); //умножение на моном (создается новый полином)
+	void operator *=(Monom mon);    //умножение на моном исходного полинома
+	TPolinom operator +(TPolinom &q); //сложение двух полиномов (создается новый)
+	void operator +=(TPolinom &q);    //сложение исходного полинома с поступающим
+	//дружественные функции, переопределение ввода и вывода
 	friend ostream& operator<<(ostream &out, TPolinom &p)
 	{
 		for (p.Reset(); !p.IsEnd(); p.GoNext())
@@ -43,6 +46,7 @@ public:
 		return in;
 	}
 };
+
 TPolinom::TPolinom() :THeadList<Monom>()
 {
 	pHead->val.coeff = 0;

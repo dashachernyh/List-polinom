@@ -3,16 +3,16 @@
 
 struct Monom
 {
-	double coeff;
-	int px, py, pz;
-	Monom()
+	double coeff;   //коэффициент монома
+	int px, py, pz; //степени х,у,z
+	Monom()         //консруктор инициализации по умолчанию
 	{
 		coeff = 0;
 		px = 0;
 		py = 0;
 		pz = 0;
 	}
-	Monom(double _coeff, int _px, int _py, int _pz)
+	Monom(double _coeff, int _px, int _py, int _pz)  //конструктор
 	{
 		if (_px < 0 || _py < 0 || _pz < 0) throw "wrong power";
 		coeff = _coeff;
@@ -20,11 +20,14 @@ struct Monom
 		py = _py;
 		pz = _pz;
 	}
-	bool operator <(const Monom &m);
-	bool operator <=(const Monom &m);
-	bool operator >(const Monom &m);
-	bool operator ==(const Monom &m);
-	bool operator >=(const Monom &m);
+	//операции сравнения
+	bool operator <(const Monom &m);  //меньше?
+	bool operator <=(const Monom &m); //меньше или равно?
+	bool operator >(const Monom &m); //больше?
+	bool operator >=(const Monom &m); //больше или равно?
+	bool operator ==(const Monom &m); //равно?
+
+	//дружественные функции, переопределение ввода и вывода
 	friend istream& operator >>(istream& in, Monom &m)
 	{
 		int k;
@@ -70,19 +73,22 @@ bool Monom::operator >=(const Monom &m)
 	else return false;
 }
 template<class T>
-class THeadList :public TList<T>
+class THeadList :public TList<T> //потомок класса TList
 {
-protected: TNode<T> *pHead;
+protected: TNode<T> *pHead;  //указатель на "голову" списка
 public:
-	THeadList();
-	void InsFirst(T el);
-	void DelFirst();
-	void InsCurr(T el);
-	void DelCurr();
-	void InsLast(T el);
-	void DelLast();
-	~THeadList();
-	bool IsEmpty();
+	THeadList();   //конструктор
+	~THeadList();  //деструктор 
+	//добавление
+	void InsFirst(T el); //перед первым
+	void InsCurr(T el);  //перед текущим
+	void InsLast(T el);  //последним
+	//удаление
+	void DelFirst();   //удалить первое звено
+	void DelCurr();    //удалить текущее звено
+	void DelLast();    //удалить последнее звено
+	//доступ
+	bool IsEmpty();    //список пуст?
 };
 template<class T>
 THeadList<T>::THeadList() :TList<T>()

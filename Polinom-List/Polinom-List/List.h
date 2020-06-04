@@ -4,37 +4,43 @@ using namespace std;
 template <class T>
 struct TNode
 {
-	T val;
-	TNode<T> *pNext;
+	T val;   //значение звена
+	TNode<T> *pNext;  //указатель на следующее звено
 };
 template <class T>
 class TList
 {
 protected:
-	TNode<T> *pFirst, *pLast, *pCurr, *pPrev, *pStop;
-	int len, pos;
+	TNode<T> *pFirst; //указатель на первое звено
+	TNode<T> *pLast;  //указтаель на последнее
+	TNode<T> *pCurr;  //указатель на текущее
+	TNode<T> *pPrev;  //указатель на предыдущее
+	TNode<T> *pStop;  //указатель, означающий конец списка
+	int len;          //количество записей в списке
+	int pos;          //номер текущей позиции
 public:
-	TList();
-	~TList();
-	void DelList();
-
-	int GetSize() { return len; }
-	int GetPos() { return pos; }
-	void SetPos(int _pos);
-
-	void InsFirst(T el);
-	void InsCurr(T el);
-	void InsLast(T el);
-	void InsOrder(T el);
-	void DelFirst();
-	void DelCurr();
-	void DelLast();
-
-	T GetCurr();
-	void Reset();
-	void GoNext();
-	bool IsEnd();
-
+	TList(); //конструктор
+	~TList(); //деструктор
+	void DelList(); //удаление списка
+	//доступ
+	int GetSize() { return len; } //кол-во элементов в списке
+	T GetCurr();   //текущее значение
+	//добавлени
+	void InsFirst(T el); //перед первым
+	void InsCurr(T el);  //перед текущим
+	void InsLast(T el);  //последним
+	void InsOrder(T el); //по порядку 
+	//удаление
+	void DelFirst(); //удалить первое звено
+	void DelCurr();  //удалить текущее звено
+	void DelLast();  //удалить последнее звено
+	//навигация
+	int GetPos() { return pos; } //номер текущей позиции
+	void SetPos(int _pos);  //установить текущее звено
+	void Reset();  //установить на первое звено
+	void GoNext(); //установить на следующее
+	bool IsEnd();  //список завершен?
+	//вывод
 	friend ostream& operator<<(ostream &out, TList<T> &l)
 	{
 		for (l.Reset(); !l.IsEnd(); l.GoNext())
